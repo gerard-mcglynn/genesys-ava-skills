@@ -1,0 +1,85 @@
+{
+  "$comment": "Canonical intent -> routing map for the Rosie intent-capture AVA. Use this to seed an Architect decision table, a queue-lookup DataAction, or as reference data when authoring the ava-design artifact. Queue names are placeholders — replace with the real Genesys Cloud ACD queue names/IDs for your org.",
+  "agent_name": "Rosie",
+  "greeting": "Hi, I'm Rosie, your contact center digital agent. In a few words, can you tell me why you're calling today?",
+  "fallback_routing_destination": "it_service_desk",
+  "routing_destinations": [
+    {
+      "id": "it_service_desk",
+      "label": "IT Service Desk",
+      "queue_name": "REPLACE_WITH_GC_QUEUE_NAME",
+      "intents": [
+        "password_reset_or_lockout",
+        "hardware_issue",
+        "software_or_application_error",
+        "network_or_vpn_connectivity",
+        "email_or_calendar_issue",
+        "new_equipment_or_software_request",
+        "system_access_request",
+        "general_it_support"
+      ]
+    },
+    {
+      "id": "finance_service_desk",
+      "label": "Finance Service Desk",
+      "queue_name": "REPLACE_WITH_GC_QUEUE_NAME",
+      "intents": [
+        "payroll_amount_or_timing_issue",
+        "expense_report_or_reimbursement",
+        "invoice_ap_ar_question",
+        "purchase_order_or_procurement",
+        "budget_or_cost_center_question",
+        "travel_booking_or_expense",
+        "tax_document_request",
+        "general_finance_inquiry"
+      ]
+    },
+    {
+      "id": "hr_service_desk",
+      "label": "HR Service Desk",
+      "queue_name": "REPLACE_WITH_GC_QUEUE_NAME",
+      "intents": [
+        "benefits_enrollment_or_change",
+        "leave_of_absence_or_pto",
+        "onboarding_question",
+        "offboarding_or_termination_process",
+        "policy_or_handbook_question",
+        "employee_relations_or_safety_concern",
+        "performance_review_question",
+        "general_hr_inquiry"
+      ],
+      "urgent_intents": [
+        "employee_relations_or_safety_concern"
+      ]
+    }
+  ],
+  "disambiguation_rules": [
+    {
+      "condition": "utterance mentions paycheck amount, missing pay, or pay timing",
+      "route_to": "finance_service_desk",
+      "intent": "payroll_amount_or_timing_issue"
+    },
+    {
+      "condition": "utterance mentions enrolling in or changing a benefit (e.g. health insurance)",
+      "route_to": "hr_service_desk",
+      "intent": "benefits_enrollment_or_change"
+    },
+    {
+      "condition": "utterance only says 'payroll' or 'benefits' with no further detail",
+      "action": "ask_one_clarifying_question",
+      "question": "Is this about the amount or timing of a paycheck, or about enrolling in or changing a benefit like health insurance?"
+    }
+  ],
+  "escalation_rules": [
+    {
+      "condition": "caller reports a safety issue, harassment, or discrimination complaint",
+      "route_to": "hr_service_desk",
+      "set_context": { "is_urgent": true },
+      "skip_further_clarification": true
+    },
+    {
+      "condition": "caller asks for a human/agent/representative",
+      "action": "transfer_to_human_immediately"
+    }
+  ]
+}

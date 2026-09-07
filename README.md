@@ -39,6 +39,12 @@ Once installed, start a new agent session in your IDE and use natural language. 
 
 You don't need to remember skill names — `ava-dispatch` reads your local session state and routes to the right skill automatically.
 
+## Examples
+
+| Example | What it is |
+| ------- | ---------- |
+| [`examples/rosie-intent-router`](./examples/rosie-intent-router) | A ready-to-author design brief for **Rosie**, a first-contact intent-capture AVA that greets the caller and routes them to the IT, Finance, or HR Service Desk based on a few-word statement of intent. Feed it to `ava-design` after setup to build it against your org. |
+
 ## Prerequisites
 
 To use these skills with a Genesys Cloud org, you need a role with these permissions:
