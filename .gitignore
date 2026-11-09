@@ -1,0 +1,11 @@
+# AVA Harness local MCP config — contains Genesys Cloud OAuth credentials
+# (Client ID/Secret or access token) written by `ava-mcp setup`. Never commit.
+.mcp.json
+.cursor/
+.kiro/
+.env
+.env.*
+
+# Per-AVA authoring sessions written locally by the lifecycle skills
+# (design artifacts, knowledge drafts, test sets, eval runs).
+.ava-lifecycle/
