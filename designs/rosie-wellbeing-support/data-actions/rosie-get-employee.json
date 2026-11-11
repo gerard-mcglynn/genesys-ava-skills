@@ -19,7 +19,7 @@
       "translationMapDefaults": {
         "name": "\"\"",
         "tierLevel": "\"\"",
-        "annualBudget": "0"
+        "annualBudget": "\"0\""
       },
       "successTemplate": "{\"employeeId\": ${employeeId}, \"name\": ${name}, \"tierLevel\": ${tierLevel}, \"annualBudget\": ${annualBudget}}"
     }
@@ -29,7 +29,9 @@
       "inputSchema": {
         "type": "object",
         "title": "Employee lookup request",
-        "required": ["employeeId"],
+        "required": [
+          "employeeId"
+        ],
         "properties": {
           "employeeId": {
             "type": "string",
@@ -44,10 +46,22 @@
         "type": "object",
         "title": "Employee wellbeing record",
         "properties": {
-          "employeeId": { "type": "string", "description": "EmployeeId" },
-          "name": { "type": "string", "description": "Employee name on record" },
-          "tierLevel": { "type": "string", "description": "Wellbeing tier level" },
-          "annualBudget": { "type": "number", "description": "Annual wellbeing budget" }
+          "employeeId": {
+            "type": "string",
+            "description": "EmployeeId"
+          },
+          "name": {
+            "type": "string",
+            "description": "Employee name on record"
+          },
+          "tierLevel": {
+            "type": "string",
+            "description": "Wellbeing tier level"
+          },
+          "annualBudget": {
+            "type": "string",
+            "description": "Annual wellbeing budget (stored as text in the data table)"
+          }
         },
         "additionalProperties": true
       }

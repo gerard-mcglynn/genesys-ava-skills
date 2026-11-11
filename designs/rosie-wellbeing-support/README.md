@@ -192,7 +192,7 @@ Check these names against your org's role editor.
 2. **Order table key:** I assumed `employeeId` is the key column of the orders table. Genesys data table keys must be unique, so with that setup **each employee can only ever place one order**, and a second order fails with a duplicate-key error. If employees can order more than once, add a unique key column (e.g. `OrderId`) and make `employeeId` a normal column. I'll update `rosie-submit-order.json` to match.
 3. **Tier matching:** I assumed exact matching (a Gold employee sees Gold products only). If tiers stack (Gold also gets Silver and Bronze), tell me the order of the tiers.
 4. **Budget tracking:** the employee table holds an *annual* budget only, with no running balance. Rosie warns if one product costs more than the annual budget, but she can't track what's already been spent. Spend tracking would mean summing the orders table or adding a "Remaining Budget" column.
-5. **Data types:** `Annual Budget`, `Price` and `Cost of Product` are assumed to be number columns. If they're strings, change the matching schema `type` to `string`.
+5. **Data types:** `Annual Budget` is a **text** column (confirmed in testing), so `rosie-get-employee.json` returns it as a string. `Price` and `Cost of Product` are still assumed to be number columns. If testing shows they are text, change the matching schema `type` to `string`.
 6. **Catalogue size:** products are read in one page of up to 500 rows.
 7. **Currency:** none is stored, so Rosie shows numbers as stored. Tell me the currency if you want a symbol shown.
 
