@@ -1,0 +1,57 @@
+{
+  "name": "Rosie - Get Employee Wellbeing Record",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/080ceda0-da98-4f18-955c-a7c9b9dad83f/rows/$esc.url(${input.employeeId})?showbrief=false",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "employeeId": "$.key",
+        "name": "$.Name",
+        "tierLevel": "$['Tier Level']",
+        "annualBudget": "$['Annual Budget']"
+      },
+      "translationMapDefaults": {
+        "name": "\"\"",
+        "tierLevel": "\"\"",
+        "annualBudget": "0"
+      },
+      "successTemplate": "{\"employeeId\": ${employeeId}, \"name\": ${name}, \"tierLevel\": ${tierLevel}, \"annualBudget\": ${annualBudget}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "title": "Employee lookup request",
+        "required": ["employeeId"],
+        "properties": {
+          "employeeId": {
+            "type": "string",
+            "description": "The EmployeeId supplied by the user (the data table key)."
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "title": "Employee wellbeing record",
+        "properties": {
+          "employeeId": { "type": "string", "description": "EmployeeId" },
+          "name": { "type": "string", "description": "Employee name on record" },
+          "tierLevel": { "type": "string", "description": "Wellbeing tier level" },
+          "annualBudget": { "type": "number", "description": "Annual wellbeing budget" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": true
+}

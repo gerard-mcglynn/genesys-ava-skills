@@ -1,0 +1,57 @@
+{
+  "name": "Rosie - List Wellbeing Products",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/63f0aa7c-745a-4cb6-a8b3-bc19a2a83e22/rows?pageSize=500&showbrief=false",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "products": "$.entities"
+      },
+      "translationMapDefaults": {
+        "products": "[]"
+      },
+      "successTemplate": "{\"products\": ${products}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "title": "List products request",
+        "properties": {},
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "title": "Wellbeing product catalogue",
+        "properties": {
+          "products": {
+            "type": "array",
+            "description": "All catalogue rows. key = Product Name.",
+            "items": {
+              "type": "object",
+              "title": "Product",
+              "properties": {
+                "key": { "type": "string", "description": "Product Name" },
+                "Product Description": { "type": "string" },
+                "Tier Level": { "type": "string" },
+                "Price": { "type": "number" }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

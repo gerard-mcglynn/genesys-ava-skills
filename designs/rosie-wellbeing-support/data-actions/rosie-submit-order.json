@@ -1,0 +1,52 @@
+{
+  "name": "Rosie - Submit Wellbeing Order",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/f2dc9520-fe5a-41d4-8bf5-92e625ccdd2a/rows",
+      "requestType": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\"key\": \"$esc.jsonString(${input.employeeId})\", \"Name\": \"$esc.jsonString(${input.name})\", \"Product Ordered\": \"$esc.jsonString(${input.productOrdered})\", \"Cost of Product\": ${input.costOfProduct}}"
+    },
+    "response": {
+      "translationMap": {
+        "orderKey": "$.key"
+      },
+      "translationMapDefaults": {
+        "orderKey": "\"\""
+      },
+      "successTemplate": "{\"orderKey\": ${orderKey}, \"submitted\": true}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "title": "Submit order request",
+        "required": ["employeeId", "name", "productOrdered", "costOfProduct"],
+        "properties": {
+          "employeeId": { "type": "string", "description": "Verified EmployeeId (written to the employeeId key column)" },
+          "name": { "type": "string", "description": "Verified employee name" },
+          "productOrdered": { "type": "string", "description": "Exact Product Name from the catalogue" },
+          "costOfProduct": { "type": "number", "description": "Price of the product from the catalogue" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "title": "Order confirmation",
+        "properties": {
+          "orderKey": { "type": "string" },
+          "submitted": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": true
+}
